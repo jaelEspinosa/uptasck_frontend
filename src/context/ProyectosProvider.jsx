@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import clienteAxios from "../config/clienteAxios";
 import useAuth from "../hooks/useAuth";
@@ -15,6 +15,8 @@ const ProyectosProvider = ({ children }) => {
   const navigate = useNavigate()
   const [cargando, setCargando] = useState(false)
   const { auth } = useAuth()
+  
+  const [modalFormularioTarea, setModalFormularioTarea]=useState(false)
 
   useEffect(() => {
     const obtenerProyectos = async () => {
@@ -174,6 +176,9 @@ const ProyectosProvider = ({ children }) => {
     }
 
   }
+  const hadleModalTarea = ()=>{
+    setModalFormularioTarea(!modalFormularioTarea)
+  }
   return (
     <ProyectosContext.Provider
       value={{
@@ -185,8 +190,9 @@ const ProyectosProvider = ({ children }) => {
         submitProyecto,
         obtenerProyecto,
         proyecto,
-        eliminarProyecto
-
+        eliminarProyecto,
+        modalFormularioTarea,
+        hadleModalTarea
       }}
     >{children}
     </ProyectosContext.Provider>
