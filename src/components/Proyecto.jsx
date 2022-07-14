@@ -3,16 +3,19 @@ import { Link, useParams } from 'react-router-dom'
 import useProyectos from '../hooks/useProyectos'
 import ModalFormularioTarea from './ModalFormulariotarea'
 import Spinner from './Spinner'
+import Tarea from './Tarea'
 
 const Proyecto = () => {
-    const { obtenerProyecto, proyecto, cargando, hadleModalTarea, modalFormularioTarea} = useProyectos()
+    const { obtenerProyecto, proyecto, cargando, handleModalTarea, modalFormularioTarea} = useProyectos()
     const params = useParams()
-    const { nombre, } = proyecto
+    const { nombre, tareas } = proyecto
    
    
     useEffect(() => {
         obtenerProyecto(params.id)
-    }, [])
+    }, [modalFormularioTarea])
+
+    
     return (
         <>
             {cargando ? <Spinner /> :
@@ -29,7 +32,7 @@ const Proyecto = () => {
                         </div>
                     </div>
                     <button
-                        onClick={hadleModalTarea}
+                        onClick={handleModalTarea}
                         type='button'
                         className='text-sm px-5 py-3 w-full md:w-auto mt-5 flex gap-2 items-center
                                    rounded-lg uppercase font-bold bg-sky-500 hover:bg-sky-700 transition-colors
@@ -40,7 +43,15 @@ const Proyecto = () => {
                         </svg>
                         Nueva Tarea
                     </button>
+                    <div className='bg-white shadow mt-10 rounded-lg'>
+                    {tareas?.length > 0 ? tareas?.map(tarea =>(
+                        <Tarea key={tarea._id} tarea = {tarea} />
+                    )):
+                    <p className='text-center my-5 p-10'>No hay tareas definidas en este proyecto</p>
+                    }
+                    </div>
                      <ModalFormularioTarea/>
+                     
                 </>
 
             }

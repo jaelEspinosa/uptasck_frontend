@@ -129,7 +129,7 @@ const ProyectosProvider = ({ children }) => {
       }
       const { data } = await clienteAxios(url, config)
       setProyecto(data)
-
+       
     } catch (error) {
       console.log(error)
     }
@@ -148,10 +148,9 @@ const ProyectosProvider = ({ children }) => {
         }
       }
       const url =`/proyectos/${id}`
-      console.log('vamos a borrar', url)
-      
+           
       const {data} = await clienteAxios.delete(url, config)
-      console.log(data)
+      
       // mostrar alerta
       setAlerta({
         msg:'Proyecto Eliminado con Éxito',
@@ -161,7 +160,7 @@ const ProyectosProvider = ({ children }) => {
       // sincronizar state
 
       const proyectosActualizados = proyectos.filter(proyectoState => proyectoState._id !== id)
-
+     
       setProyectos(proyectosActualizados)
 
       // redireccionar
@@ -170,14 +169,41 @@ const ProyectosProvider = ({ children }) => {
         setAlerta({})
         navigate('/proyectos')
       }, 2000);
+      
 
     } catch (error) {
       console.log(error)
     }
 
   }
-  const hadleModalTarea = ()=>{
+  const handleModalTarea = ()=>{
     setModalFormularioTarea(!modalFormularioTarea)
+  }
+
+  const submitTarea = async tarea =>{
+    try {
+      const token = localStorage.getItem('token')
+      if (!token) return
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+           Authorization: `Bearer ${token}`
+        }
+      }      
+      const {data} = await clienteAxios.post('/tareas', tarea, config)
+      
+      setAlerta({
+       msg: 'Tarea Agregada con Éxito',
+       error: false
+      })  
+      setTimeout(() => {
+         setAlerta({})
+         handleModalTarea()
+      }, 2000);  
+      
+    } catch (error) {
+      console.log(error)
+    }
   }
   return (
     <ProyectosContext.Provider
@@ -192,7 +218,8 @@ const ProyectosProvider = ({ children }) => {
         proyecto,
         eliminarProyecto,
         modalFormularioTarea,
-        hadleModalTarea
+        handleModalTarea,
+        submitTarea
       }}
     >{children}
     </ProyectosContext.Provider>

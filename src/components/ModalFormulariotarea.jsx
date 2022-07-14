@@ -2,6 +2,7 @@ import { Fragment, useState, useEffect } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import useProyectos from '../hooks/useProyectos'
 import Alerta from './Alerta'
+import { useParams } from 'react-router-dom'
 
 
 const ModalFormularioTarea = () => {
@@ -9,11 +10,13 @@ const ModalFormularioTarea = () => {
     const [nombre, setNombre] = useState('')
     const [descripcion, setDescripcion] = useState('')
     const [prioridad, setPrioridad] = useState('')
-    const {alerta, setAlerta}=useProyectos()
-    
-    const handleSubmit= e =>{
-        e.preventDefault()
-        if([prioridad, descripcion, nombre].includes('')){
+    const [fechaEntrega, setFechaEntrega] = useState('')
+    const {alerta, setAlerta,submitTarea,modalFormularioTarea, handleModalTarea}=useProyectos()
+    const params = useParams()
+
+    const handleSubmit= async e =>{
+        e.preventDefault();
+        if([prioridad, descripcion, nombre, fechaEntrega].includes('')){
             setAlerta({
                 msg:'Todos los campos son Obligatorios',
                 error:true
@@ -21,13 +24,16 @@ const ModalFormularioTarea = () => {
             setTimeout(() => {
                 setAlerta({})
             }, 2000);
-            return       }
+            return       
+        }
+      await submitTarea({nombre, descripcion, prioridad, fechaEntrega, proyecto:params.id })
+      
     }
 
-    const { modalFormularioTarea, hadleModalTarea } = useProyectos()
+    
     return (
         <Transition.Root show={modalFormularioTarea} as={Fragment}>
-            <Dialog as="div" className="fixed z-10 inset-0 overflow-y-auto" onClose={hadleModalTarea}>
+            <Dialog as="div" className="fixed z-10 inset-0 overflow-y-auto" onClose={handleModalTarea}>
                 <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                     <Transition.Child
                         as={Fragment}
@@ -64,7 +70,7 @@ const ModalFormularioTarea = () => {
                                 <button
                                     type="button"
                                     className="bg-white rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                    onClick={hadleModalTarea}
+                                    onClick={handleModalTarea}
                                 >
                                     <span className="sr-only">Cerrar</span>
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
@@ -85,11 +91,11 @@ const ModalFormularioTarea = () => {
                                             <label
                                                 className='text-gray-700 font-bold uppercase text-sm'
                                                 htmlFor='nombre'
-                                            >Nombre de la tarea:</label>
+                                            >Nombre:</label>
                                             <input
                                                 type='text'
                                                 id='nombre'
-                                                className='border-2 w-full p-2 mt-2 rounded-md placeholderbg-gray-400'
+                                                className='outline-none hover:outline-sky-600 border-2 w-full p-2 mt-2 rounded-md placeholderbg-gray-400'
                                                 placeholder='Nombre de la tarea'
                                                 value={nombre}
                                                 onChange={e => setNombre(e.target.value)}
@@ -104,10 +110,25 @@ const ModalFormularioTarea = () => {
                                             <textarea
 
                                                 id='descripcion'
-                                                className='border-2 w-full p-2 mt-2 rounded-md placeholderbg-gray-400'
+                                                className='outline-none hover:outline-sky-600 border-2 w-full p-2 mt-2 rounded-md placeholderbg-gray-400'
                                                 placeholder='Descripción'
                                                 value={descripcion}
                                                 onChange={e => setDescripcion(e.target.value)}
+                                            />
+
+                                        </div>
+                                        <div className='mb-5'>
+                                            <label
+                                                className='text-gray-700 font-bold uppercase text-sm'
+                                                htmlFor='fecha-entrega'
+                                            >Fecha Entrega</label>
+                                            <input
+                                                type='date'
+                                                id='fecha-entrega'
+                                                className='outline-none hover:outline-sky-600 border-2 w-full p-2 mt-2 rounded-md placeholderbg-gray-400'
+                                                
+                                                value={fechaEntrega}
+                                                onChange={e => setFechaEntrega(e.target.value)}
                                             />
 
                                         </div>
@@ -115,10 +136,12 @@ const ModalFormularioTarea = () => {
                                         <div className='flex justify-evenly '>
                                             <label className='flex gap-2 justify-center' htmlFor='Alta'>Alta
                                             <input 
+                                                 className='hover:outline-sky-600'
                                                  onChange={e=>setPrioridad(e.target.value)}
                                                  type='radio' value='Alta' name='Prioridad' /></label>
                                             <label className='flex gap-2 justify-center' htmlFor='Media'>Media
                                             <input
+                                                 className='hover:outline-sky-600'
                                                  onChange={e=>setPrioridad(e.target.value)}                                                
                                                  type='radio' value='Media' name='Prioridad' /></label>
                                             <label className='flex gap-2 justify-center' htmlFor='Baja'>Baja
@@ -129,7 +152,7 @@ const ModalFormularioTarea = () => {
                                         <input
                                             type='submit'
                                             value='Guardar Tarea'
-                                            className='text-sm px-5 py-3 w-full mt-5 
+                                            className='text-sm px-5 py-3 w-full mt-10 
                                                  rounded-lg uppercase font-bold bg-sky-500 hover:bg-sky-700 transition-colors
                                                text-white text-center'
                                         />
