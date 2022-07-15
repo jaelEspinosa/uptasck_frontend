@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import PreviewProyecto from "../components/PreviewProyecto";
 import clienteAxios from "../config/clienteAxios";
 import useAuth from "../hooks/useAuth";
 
@@ -135,6 +136,7 @@ const ProyectosProvider = ({ children }) => {
     }
     setCargando(false)
   }
+
   const eliminarProyecto = async id =>{
    
     
@@ -192,6 +194,19 @@ const ProyectosProvider = ({ children }) => {
       }      
       const {data} = await clienteAxios.post('/tareas', tarea, config)
       
+    // agrega la tarea creada al state para que se muestre sin necesidad de recargar la pagina y hacer
+    // otra peticion a la api
+
+       const tareasActualizadas = [...proyecto.tareas, data] // actualizo el array de tareas       
+       const proyectoActualizado = {...proyecto} // tomo una copia del proyecto original
+       proyectoActualizado.tareas = tareasActualizadas // sustituyo el array original por el de tareasActualizadas
+    // ahora ya puedo setear el state de proyecto con proyecto actualizado con el nuevo 
+    // arrray de tareas
+    
+       setProyecto(proyectoActualizado) 
+   
+       
+
       setAlerta({
        msg: 'Tarea Agregada con Éxito',
        error: false

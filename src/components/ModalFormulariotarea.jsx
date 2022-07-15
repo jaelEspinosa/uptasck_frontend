@@ -27,7 +27,13 @@ const ModalFormularioTarea = () => {
             return       
         }
       await submitTarea({nombre, descripcion, prioridad, fechaEntrega, proyecto:params.id })
+
+      // resetamos formulario del modal
       
+      setNombre('')
+      setDescripcion('')
+      setFechaEntrega('')
+      setPrioridad('')
     }
 
     
@@ -132,22 +138,22 @@ const ModalFormularioTarea = () => {
                                             />
 
                                         </div>
-                                        <label className='text-gray-700 uppercase text-sm font-bold'>Prioridad:</label>
-                                        <div className='flex justify-evenly '>
-                                            <label className='flex gap-2 justify-center' htmlFor='Alta'>Alta
+                                        <p className='text-gray-700 uppercase text-sm font-bold'>Prioridad:</p>
+                                        <div className='flex justify-evenly mt-5'>
+                                            <label className='flex gap-2 justify-center' htmlFor='Alta'>
                                             <input 
-                                                 className='hover:outline-sky-600'
+                                                 
                                                  onChange={e=>setPrioridad(e.target.value)}
-                                                 type='radio' value='Alta' name='Prioridad' /></label>
-                                            <label className='flex gap-2 justify-center' htmlFor='Media'>Media
+                                                 type='radio' value='Alta' name='Prioridad' />Alta</label>
+                                            <label className='flex gap-2 justify-center' htmlFor='Media'>
                                             <input
-                                                 className='hover:outline-sky-600'
+                                                 
                                                  onChange={e=>setPrioridad(e.target.value)}                                                
-                                                 type='radio' value='Media' name='Prioridad' /></label>
-                                            <label className='flex gap-2 justify-center' htmlFor='Baja'>Baja
+                                                 type='radio' value='Media' name='Prioridad' />Media</label>
+                                            <label className='flex gap-2 justify-center' htmlFor='Baja'>
                                             <input 
                                                  onChange={e=>setPrioridad(e.target.value)}                                                  
-                                                 type='radio' value='Baja' name='Prioridad' /></label>
+                                                 type='radio' value='Baja' name='Prioridad' />Baja</label>
                                         </div>
                                         <input
                                             type='submit'

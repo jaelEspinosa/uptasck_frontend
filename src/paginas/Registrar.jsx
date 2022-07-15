@@ -44,7 +44,7 @@ const Registrar = () => {
       
 
         const {data} = await clienteAxios.post(`/usuarios`, {nombre, email, password})
-         console.log(data)
+      
         setAlerta({
         msg: data.msg,
         error:false

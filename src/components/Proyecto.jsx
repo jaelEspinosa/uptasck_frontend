@@ -13,7 +13,7 @@ const Proyecto = () => {
    
     useEffect(() => {
         obtenerProyecto(params.id)
-    }, [modalFormularioTarea])
+    }, [])
 
     
     return (
@@ -43,6 +43,7 @@ const Proyecto = () => {
                         </svg>
                         Nueva Tarea
                     </button>
+                    <p className='font-bold text-xl mt-10 text-gray-800'>Tareas del Proyecto</p>
                     <div className='bg-white shadow mt-10 rounded-lg'>
                     {tareas?.length > 0 ? tareas?.map(tarea =>(
                         <Tarea key={tarea._id} tarea = {tarea} />
