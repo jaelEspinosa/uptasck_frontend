@@ -6,13 +6,30 @@ import { useParams } from 'react-router-dom'
 
 
 const ModalFormularioTarea = () => {
+    const [id, setId] = useState('')
 
     const [nombre, setNombre] = useState('')
     const [descripcion, setDescripcion] = useState('')
     const [prioridad, setPrioridad] = useState('')
     const [fechaEntrega, setFechaEntrega] = useState('')
-    const {alerta, setAlerta,submitTarea,modalFormularioTarea, handleModalTarea}=useProyectos()
+    const {alerta, setAlerta,submitTarea,modalFormularioTarea, handleModalTarea, tarea}=useProyectos()
     const params = useParams()
+    const PRIORIDAD = ['Alta','Media','Baja']
+    useEffect(()=>{
+        if(tarea?._id){
+            setId(tarea._id)
+            setNombre(tarea.nombre)
+            setDescripcion(tarea.descripcion)
+            setFechaEntrega(tarea.fechaEntrega.split('T')[0])
+            setPrioridad(tarea.prioridad)
+            return
+        }
+        setId('')
+        setNombre('')
+        setDescripcion('')
+        setFechaEntrega('')
+        setPrioridad('')
+    },[tarea])
 
     const handleSubmit= async e =>{
         e.preventDefault();
@@ -26,16 +43,16 @@ const ModalFormularioTarea = () => {
             }, 2000);
             return       
         }
-      await submitTarea({nombre, descripcion, prioridad, fechaEntrega, proyecto:params.id })
+      await submitTarea({id, nombre, descripcion, prioridad, fechaEntrega, proyecto:params.id })
 
       // resetamos formulario del modal
-      
+      setId('')
       setNombre('')
       setDescripcion('')
       setFechaEntrega('')
       setPrioridad('')
     }
-
+   
     
     return (
         <Transition.Root show={modalFormularioTarea} as={Fragment}>
@@ -89,7 +106,7 @@ const ModalFormularioTarea = () => {
                             <div className="sm:flex sm:items-start">
                                 <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
                                     <Dialog.Title as="h3" className="text-2xl leading-6 font-bold text-gray-900">
-                                        Crear Tarea
+                                       {id ? 'Editar Tarea' : 'Crear Tarea'}
                                     </Dialog.Title> 
                                     {alerta.msg && <Alerta alerta = {alerta}/>}
                                     <form className='my-10' onSubmit={handleSubmit}>
@@ -139,25 +156,21 @@ const ModalFormularioTarea = () => {
 
                                         </div>
                                         <p className='text-gray-700 uppercase text-sm font-bold'>Prioridad:</p>
-                                        <div className='flex justify-evenly mt-5'>
-                                            <label className='flex gap-2 justify-center' htmlFor='Alta'>
-                                            <input 
-                                                 
-                                                 onChange={e=>setPrioridad(e.target.value)}
-                                                 type='radio' value='Alta' name='Prioridad' />Alta</label>
-                                            <label className='flex gap-2 justify-center' htmlFor='Media'>
-                                            <input
-                                                 
-                                                 onChange={e=>setPrioridad(e.target.value)}                                                
-                                                 type='radio' value='Media' name='Prioridad' />Media</label>
-                                            <label className='flex gap-2 justify-center' htmlFor='Baja'>
-                                            <input 
-                                                 onChange={e=>setPrioridad(e.target.value)}                                                  
-                                                 type='radio' value='Baja' name='Prioridad' />Baja</label>
-                                        </div>
+                                        <select 
+                                            id='prioridad'
+                                            className='outline-none hover:outline-sky-600 border-2 w-full p-2 mt-2 placeholderbg-gray-400 rounded-md'
+                                            value={prioridad}
+                                            onChange={e => setPrioridad(e.target.value)}
+                                        >
+                                          <option value=''> -- Seleccionar -- </option>
+                                          {PRIORIDAD.map (opcion =>(
+                                            <option key={opcion}>{opcion}</option>
+                                          ))}
+                                           
+                                        </select>
                                         <input
                                             type='submit'
-                                            value='Guardar Tarea'
+                                            value={id ? 'Guardar Cambios' : 'Crear tarea'}
                                             className='text-sm px-5 py-3 w-full mt-10 
                                                  rounded-lg uppercase font-bold bg-sky-500 hover:bg-sky-700 transition-colors
                                                text-white text-center'

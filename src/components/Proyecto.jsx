@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import useProyectos from '../hooks/useProyectos'
 import ModalFormularioTarea from './ModalFormulariotarea'
