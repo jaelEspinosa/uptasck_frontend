@@ -1,16 +1,18 @@
 import { useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import useProyectos from '../hooks/useProyectos'
+import Alerta from './Alerta'
+import ModalEliminarTarea from './ModalEliminarTarea'
 import ModalFormularioTarea from './ModalFormulariotarea'
 import Spinner from './Spinner'
 import Tarea from './Tarea'
 
 const Proyecto = () => {
-    const { obtenerProyecto, proyecto, cargando, handleModalTarea, modalFormularioTarea} = useProyectos()
+    const { obtenerProyecto, proyecto, cargando, handleModalTarea, alerta} = useProyectos()
     const params = useParams()
     const { nombre, tareas } = proyecto
    
-   
+    
     useEffect(() => {
         obtenerProyecto(params.id)
     }, [])
@@ -19,7 +21,8 @@ const Proyecto = () => {
     return (
         <>
             {cargando ? <Spinner /> :
-                <>
+                <>   
+               
                     <div className='flex justify-between '>
                         <h1 className='font-black text-4xl'>{nombre}</h1>
                         <div className='flex items-center gap-2 text-gray-400 hover:text-black'>
@@ -43,6 +46,7 @@ const Proyecto = () => {
                         </svg>
                         Nueva Tarea
                     </button>
+                    {alerta?.msg && <Alerta alerta = {alerta}/>}
                     <p className='font-bold text-xl mt-10 text-gray-800'>Tareas del Proyecto</p>
                     <div className='bg-white shadow mt-10 rounded-lg'>
                     {tareas?.length > 0 ? tareas?.map(tarea =>(
@@ -52,7 +56,8 @@ const Proyecto = () => {
                     }
                     </div>
                      <ModalFormularioTarea/>
-                     
+                     <ModalEliminarTarea/>
+                     {alerta?.msg && <Alerta alerta = {alerta}/>}
                 </>
 
             }
