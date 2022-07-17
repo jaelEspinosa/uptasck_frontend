@@ -1,23 +1,24 @@
 import { useEffect } from "react"
 import { useParams } from "react-router-dom"
 import FormularioProyecto from "../components/FormularioProyecto"
+import ModalEliminarProyecto from "../components/ModalEliminarProyecto"
 import Spinner from "../components/Spinner"
 import useProyectos from "../hooks/useProyectos"
 
 
 const EditarProyecto = () => {
     const params = useParams()
-    const { proyecto, obtenerProyecto, cargando, eliminarProyecto } = useProyectos()
+    const { proyecto, obtenerProyecto, cargando, handleModalEliminarProyecto } = useProyectos()
 
     useEffect(() => {
         obtenerProyecto(params.id)
     }, [])
+// TODO agregar el modal de eliminar proyecto
 
-    const handleClick = ()=>{
-        if(confirm('¿Deseas eliminar este proyecto?')){
-            eliminarProyecto(params.id)
-        }
+    const handleClick = ()=>{        
+            handleModalEliminarProyecto(proyecto)        
     }
+
     const { nombre } = proyecto
     return (
         cargando ? <Spinner /> : (
@@ -39,6 +40,7 @@ const EditarProyecto = () => {
 
                 <div className="mt-10 flex justify-center">
                     <FormularioProyecto />
+                    <ModalEliminarProyecto />
                 </div>
             </div>
 

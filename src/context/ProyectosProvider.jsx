@@ -16,7 +16,7 @@ const ProyectosProvider = ({ children }) => {
   const navigate = useNavigate()
   const [cargando, setCargando] = useState(false)
   const { auth } = useAuth()
-  
+  const [modalEliminarProyecto, setModalEliminarPoryecto]=useState(false)
   const [modalFormularioTarea, setModalFormularioTarea]=useState(false)
   const [modalEliminarTarea, setModalEliminarTarea]=useState(false)
   const [tarea, setTarea]= useState({})
@@ -168,7 +168,7 @@ const ProyectosProvider = ({ children }) => {
       setProyectos(proyectosActualizados)
 
       // redireccionar
-
+      handleModalEliminarProyecto()
       setTimeout(() => {
         setAlerta({})
         navigate('/proyectos')
@@ -222,9 +222,11 @@ const ProyectosProvider = ({ children }) => {
          msg: 'Tarea Agregada con Éxito',
          error: false
         })  
+        handleModalTarea()
+        
         setTimeout(() => {
            setAlerta({})
-           handleModalTarea()
+           
         }, 2000);  
         
       } catch (error) {
@@ -272,6 +274,11 @@ const ProyectosProvider = ({ children }) => {
   const handleModalEliminarTarea = tarea =>{
     setTarea(tarea)
     setModalEliminarTarea(!modalEliminarTarea)
+  }
+
+  const handleModalEliminarProyecto = proyecto=>{
+    setModalEliminarPoryecto(!modalEliminarProyecto)
+    
   }
 
   const eliminarTarea = async tarea =>{
@@ -326,7 +333,9 @@ const ProyectosProvider = ({ children }) => {
         tarea,
         handleModalEliminarTarea,
         modalEliminarTarea,
-        eliminarTarea
+        eliminarTarea,
+        modalEliminarProyecto,
+        handleModalEliminarProyecto
       }}
     >{children}
     </ProyectosContext.Provider>

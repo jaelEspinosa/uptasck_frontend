@@ -3,14 +3,11 @@ import { Dialog, Transition } from '@headlessui/react'
 import useProyectos from '../hooks/useProyectos'
 
 
-const ModalEliminarTarea = () => {
-
-    const { handleModalEliminarTarea, modalEliminarTarea, tarea, eliminarTarea } = useProyectos()
-
-
+const ModalEliminarProyecto = () => {
+    const { modalEliminarProyecto, handleModalEliminarProyecto, proyecto, eliminarProyecto } = useProyectos()
     return (
-        <Transition.Root show={modalEliminarTarea} as={Fragment}>
-            <Dialog as="div" className="fixed z-10 inset-0 overflow-y-auto" onClose={handleModalEliminarTarea}>
+        <Transition.Root show={modalEliminarProyecto} as={Fragment}>
+            <Dialog as="div" className="fixed z-10 inset-0 overflow-y-auto" onClose={handleModalEliminarProyecto}>
                 <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                     <Transition.Child
                         as={Fragment}
@@ -47,7 +44,7 @@ const ModalEliminarTarea = () => {
                                 <button
                                     type="button"
                                     className="bg-white rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                    onClick={handleModalEliminarTarea}
+                                    onClick={handleModalEliminarProyecto}
                                 >
                                     <span className="sr-only">Cerrar</span>
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
@@ -55,6 +52,8 @@ const ModalEliminarTarea = () => {
                                     </svg>
                                 </button>
                             </div>
+
+
                             <div className="sm:flex sm:items-start">
                                 <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-red-600" viewBox="0 0 20 20" fill="currentColor">
@@ -63,23 +62,21 @@ const ModalEliminarTarea = () => {
                                 </div>
                                 <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
                                     <Dialog.Title as="h3" className="text-xl mb-3 leading-6 font-bold text-gray-900 ">
-                                        ¿Eliminar Tarea?
+                                        ¿Eliminar Proyecto?
                                     </Dialog.Title>
-                                    <p className='text-gray-700 font-black text-xs mb-3'><span className='text-sm text-gray-800  italic'>{tarea?.nombre}</span></p>
+                                    <p className='text-gray-700 font-black text-xs mb-3'><span className='text-sm text-gray-800  italic'>{proyecto?.nombre}</span></p>
                                     <p className='text-gray-600 text-xs font-bold mb-3'>NO SE PODRA RECUPERAR</p>
                                     <div className='flex justify-end gap-5 '>
                                     <button
-                                            onClick={handleModalEliminarTarea}
+                                            onClick={handleModalEliminarProyecto}
                                             className=" border hover:bg-slate-300 trasition-colors px-4 py-3 text-gray-700 uppercase font-bold text-xs rounded-lg"
                                         >Cancelar</button>
                                         <button
-                                            onClick={() => eliminarTarea(tarea)}
+                                            onClick={() => eliminarProyecto(proyecto._id)}
                                             className="bg-red-600 hover:bg-red-700 trasition-colors px-4 py-3 text-white uppercase font-bold text-xs rounded-lg"
                                         >Eliminar</button>
                                         
                                     </div>
-
-
                                 </div>
                             </div>
                         </div>
@@ -90,4 +87,4 @@ const ModalEliminarTarea = () => {
     )
 }
 
-export default ModalEliminarTarea
+export default ModalEliminarProyecto
