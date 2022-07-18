@@ -1,16 +1,16 @@
-import { Fragment } from 'react'
+import { Fragment} from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import useProyectos from '../hooks/useProyectos'
 
 
-const ModalEliminarTarea = () => {
+const ModalEliminarColaborador = () => {
 
-    const { handleModalEliminarTarea, modalEliminarTarea, tarea, eliminarTarea } = useProyectos()
+    const { modalEliminarColaborador, handleModalEliminarColaborador, colaborador,eliminarColaborador } = useProyectos()
 
 
     return (
-        <Transition.Root show={modalEliminarTarea} as={Fragment}>
-            <Dialog as="div" className="fixed z-10 inset-0 overflow-y-auto" onClose={handleModalEliminarTarea}>
+        <Transition.Root show={modalEliminarColaborador} as={Fragment}>
+            <Dialog as="div" className="fixed z-10 inset-0 overflow-y-auto" onClose={handleModalEliminarColaborador}>
                 <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                     <Transition.Child
                         as={Fragment}
@@ -47,7 +47,7 @@ const ModalEliminarTarea = () => {
                                 <button
                                     type="button"
                                     className="bg-white rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                    onClick={handleModalEliminarTarea}
+                                    onClick={handleModalEliminarColaborador}
                                 >
                                     <span className="sr-only">Cerrar</span>
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
@@ -63,17 +63,17 @@ const ModalEliminarTarea = () => {
                                 </div>
                                 <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
                                     <Dialog.Title as="h3" className="text-xl mb-3 leading-6 font-bold text-gray-900 ">
-                                        ¿Eliminar Tarea?
+                                        ¿Eliminar colaborador?
                                     </Dialog.Title>
-                                    <p className='text-gray-700 font-black text-xs mb-3'><span className='text-sm text-gray-800  italic'>{tarea?.nombre}</span></p>
-                                    <p className='text-gray-600 text-xs font-bold mb-3'>NO SE PODRA RECUPERAR</p>
+                                    <p className='text-gray-700 font-black text-xs mb-3'><span className='text-sm text-gray-800  italic'>{colaborador?.nombre}</span></p>
+                                    <p className='text-gray-600 text-xs font-bold mb-3'>Una vez eliminado, este usuario no podrá acceder al proyecto</p>
                                     <div className='flex justify-end gap-5 '>
                                     <button
-                                            onClick={handleModalEliminarTarea}
+                                            onClick={handleModalEliminarColaborador}
                                             className=" border hover:bg-slate-300 trasition-colors px-4 py-3 text-gray-700 uppercase font-bold text-xs rounded-lg"
                                         >Cancelar</button>
                                         <button
-                                            onClick={() => eliminarTarea(tarea)}
+                                            onClick={()=>eliminarColaborador(colaborador)}
                                             className="bg-red-600 hover:bg-red-700 trasition-colors px-4 py-3 text-white uppercase font-bold text-xs rounded-lg"
                                         >Eliminar</button>
                                         
@@ -90,4 +90,4 @@ const ModalEliminarTarea = () => {
     )
 }
 
-export default ModalEliminarTarea
+export default ModalEliminarColaborador
