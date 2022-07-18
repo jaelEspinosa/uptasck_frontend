@@ -369,9 +369,15 @@ const ProyectosProvider = ({ children }) => {
         msg:data.msg,
         error:false
       })       
-       setColaborador({})
-       setAlerta({})
       
+       
+       setTimeout(() => {
+        navigate(`/proyectos/${proyecto._id}`) 
+        setColaborador({})
+        setAlerta({})
+       }, 1000);
+      
+     
       } catch (error) {
           setAlerta({
             msg:error.response.data.msg,
