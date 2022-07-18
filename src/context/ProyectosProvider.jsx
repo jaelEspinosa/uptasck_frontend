@@ -368,16 +368,12 @@ const ProyectosProvider = ({ children }) => {
       setAlerta({
         msg:data.msg,
         error:false
-      })       
-      
-       
-       setTimeout(() => {
+      })  
+
         navigate(`/proyectos/${proyecto._id}`) 
         setColaborador({})
         setAlerta({})
-       }, 1000);
-      
-     
+           
       } catch (error) {
           setAlerta({
             msg:error.response.data.msg,
@@ -390,9 +386,41 @@ const ProyectosProvider = ({ children }) => {
     setColaborador(colaborador)
     
   }
-  const eliminarColaborador= colaborador =>{
-    handleModalEliminarColaborador()
-    console.log('me voy a cepillar a ', colaborador.nombre)
+  const eliminarColaborador = async colaborador =>{
+  
+    setColaborador(colaborador)
+     try {
+      const token = localStorage.getItem('token')
+      if (!token) return
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+           Authorization: `Bearer ${token}`
+        }
+      }
+      const {data} = await clienteAxios.post(`/proyectos/eliminar-colaborador/${proyecto._id}`,{id: colaborador._id},config)
+      
+      const proyectoActualizado = {...proyecto}
+
+      proyectoActualizado.colaboradores = proyectoActualizado.colaboradores.filter(colaboradorState => colaboradorState._id !== colaborador._id)
+
+      setProyecto(proyectoActualizado)
+      
+      setAlerta({
+        msg: data.msg,
+        error: false
+      })
+      setTimeout(() => {
+        setAlerta({})
+        
+      }, 2000);
+        setColaborador({})
+        handleModalEliminarColaborador()
+     
+     } catch (error) {
+      console.log(error)
+     }
+    
   }
   return (
     <ProyectosContext.Provider

@@ -26,7 +26,6 @@ const FormularioColaborador = () => {
          
             onSubmit={handleSubmit}
             className="bg-white py-10 px-5 md:w-1/2 rounded-lg shadow">
-            {alerta.msg && <Alerta alerta = {alerta}/>}
             <div className='mb-5'>
                 <label
                     className='text-gray-700 font-bold uppercase text-sm'

@@ -1,3 +1,4 @@
+import Alerta from "../components/Alerta"
 import PreviewProyecto from "../components/PreviewProyecto"
 import Spinner from "../components/Spinner"
 import useAuth from "../hooks/useAuth"
@@ -5,7 +6,7 @@ import useProyectos from "../hooks/useProyectos"
 
 
 const Proyectos = () => {
-  const {proyectos, cargando} = useProyectos()
+  const {proyectos, cargando, alerta} = useProyectos()
   const {auth} = useAuth()
   
   
@@ -24,6 +25,7 @@ const Proyectos = () => {
       :<p className="text-3xl 
             text-center text-gray-600 uppercase">{auth.nombre}, No tienes proyectos aún</p>}
     </div>
+    {Alerta.msg && <Alerta alerta = {alerta}/>}
     </>
     }
     

@@ -14,8 +14,7 @@ const Proyecto = () => {
     const params = useParams()
     const { nombre, tareas, colaboradores } = proyecto
     
-    console.log(proyecto)
-    
+        
     useEffect(() => {
         obtenerProyecto(params.id)
     }, [])
