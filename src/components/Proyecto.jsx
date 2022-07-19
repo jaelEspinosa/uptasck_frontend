@@ -1,4 +1,4 @@
-import { useEffect} from 'react'
+import { useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import useAdmin from '../hooks/useAdmin'
 
@@ -14,23 +14,25 @@ import Tarea from './Tarea'
 const Proyecto = () => {
     const { obtenerProyecto, proyecto, cargando, handleModalTarea, alerta } = useProyectos()
     const params = useParams()
-    const { nombre, tareas, colaboradores } = proyecto    
-    const admin = useAdmin()   
+    
+    const admin = useAdmin()
 
     useEffect(() => {
         obtenerProyecto(params.id)
 
     }, [])
-
+    const { nombre } = proyecto
+    
+    
     return (
-        alerta.msg && alerta.error ? <Alerta alerta={alerta} /> : (
+        
             <>
                 {cargando ? <Spinner /> :
                     <>
 
                         <div className='flex justify-between '>
                             <h1 className='font-black text-4xl'>{nombre}</h1>
-                           {admin && <div className='flex items-center gap-2 text-gray-400 hover:text-black'>
+                            {admin && <div className='flex items-center gap-2 text-gray-400 hover:text-black'>
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                                 </svg>
@@ -39,7 +41,7 @@ const Proyecto = () => {
                                     to={`/proyectos/editar/${params.id}`} >Editar</Link>
                             </div>}
                         </div>
-                        { admin && <button
+                        {admin && <button
                             onClick={handleModalTarea}
                             type='button'
                             className='text-sm px-5 py-3 w-full md:w-auto mt-5 flex gap-2 items-center
@@ -51,10 +53,11 @@ const Proyecto = () => {
                             </svg>
                             Nueva Tarea
                         </button>}
-                        {alerta?.msg && <Alerta alerta={alerta} />}
-                        <p className='font-bold text-xl mt-10 text-gray-800'>Tareas del Proyecto</p>
-                        <div className='bg-white shadow mt-10 rounded-lg'>
-                            {tareas?.length > 0 ? tareas?.map(tarea => (
+                    
+                        <p className='font-bold text-xl mt-10 text-gray-800'>Tareas del Proyecto: {proyecto.tareas?.length}</p>
+                        <div className='bg-white shadow mt-10 rounded-lg  overflow-y-scroll scrollbar-thumb-transparent scrollbar-thin
+                                        hover:scrollbar-thumb-sky-700 scrollbar-thumb-rounded-full h-96 transition-colors'>
+                            {proyecto.tareas?.length ? proyecto.tareas?.map(tarea => (
                                 <Tarea key={tarea._id} tarea={tarea} />
                             )) :
                                 <p className='text-center my-5 p-10'>No hay tareas definidas en este proyecto</p>
@@ -72,7 +75,7 @@ const Proyecto = () => {
                                     </Link>
                                 </div>
                                 <div className='bg-white shadow mt-10 rounded-lg'>
-                                    {colaboradores?.length > 0 ? colaboradores?.map(colaborador => (
+                                    {proyecto.colaboradores?.length  ? proyecto.colaboradores?.map(colaborador => (
                                         <Colaborador key={colaborador._id} colaborador={colaborador} />
                                     )) :
                                         <p className='text-center my-5 p-10'>No hay colaboradores definidas en este proyecto</p>
@@ -93,7 +96,7 @@ const Proyecto = () => {
 
                 }
             </>
-        ))
+        )
 }
 
 export default Proyecto

@@ -24,7 +24,7 @@ const NuevoColaborador = () => {
       </div>
       {cargando ? <Spinner /> : colaborador?._id && (
         <div className="flex justify-center mt-10">
-          <div className="bg-white p-10 px-5 md:w-1/2 rounded-lg shadow">
+          <div className="bg-white p-10 px-5 w-full md:w-1/2 rounded-lg shadow">
             <h2 className="text-center mb-10 text-2xl font-bold">Resultado</h2>
             <div className="flex justify-between items-center">
 

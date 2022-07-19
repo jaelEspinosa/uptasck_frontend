@@ -135,13 +135,14 @@ const ProyectosProvider = ({ children }) => {
       setAlerta({}) 
       
     } catch (error) {
+      navigate('/proyectos')  
       setAlerta({
         msg: error.response.data.msg,
         error:true
       })
       setTimeout(() => {
         setAlerta({})
-        navigate('/proyectos')  // TODO  comprobar si es correcto o borrar
+        
       }, 2000);
       
     }
