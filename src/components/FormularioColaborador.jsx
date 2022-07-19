@@ -40,13 +40,18 @@ const FormularioColaborador = () => {
                     onChange={e => setEmail(e.target.value)}
                 />
             </div>
-            <input
+            { !alerta.msg && <input
                 type='submit'
                 value='Buscar Colaborador'
                 className='text-sm px-5 py-3 w-full mt-10 
                   rounded-lg uppercase font-bold bg-sky-500 hover:bg-sky-700 transition-colors
                 text-white text-center'
-            />
+            />}
+            <div className="w-full">
+           
+            {alerta.msg && <Alerta alerta={alerta} />} 
+
+            </div>
         </form>
     )
 }

@@ -12,7 +12,6 @@ const ProyectosProvider = ({ children }) => {
   const [alerta, setAlerta] = useState({})
   const [proyecto, setProyecto] = useState({})
   const [colaborador, setColaborador]=useState({})
-
   const navigate = useNavigate()
   const [cargando, setCargando] = useState(false)
   const { auth } = useAuth()
@@ -133,7 +132,8 @@ const ProyectosProvider = ({ children }) => {
       }
       const { data } = await clienteAxios(url, config)
       setProyecto(data)
-       
+      setAlerta({}) 
+      
     } catch (error) {
       setAlerta({
         msg: error.response.data.msg,
@@ -141,7 +141,9 @@ const ProyectosProvider = ({ children }) => {
       })
       setTimeout(() => {
         setAlerta({})
+        navigate('/proyectos')  // TODO  comprobar si es correcto o borrar
       }, 2000);
+      
     }
     setCargando(false)
   }
@@ -345,7 +347,7 @@ const ProyectosProvider = ({ children }) => {
       setTimeout(() => {
         setAlerta({})
         
-      }, 1500);
+      }, 2000);
       
     } finally{
       setCargando(false)
@@ -369,10 +371,12 @@ const ProyectosProvider = ({ children }) => {
         msg:data.msg,
         error:false
       })  
-
-        navigate(`/proyectos/${proyecto._id}`) 
         setColaborador({})
+      setTimeout(() => {
+        navigate(`/proyectos/${proyecto._id}`) 
         setAlerta({})
+      }, 2000); 
+        
            
       } catch (error) {
           setAlerta({
@@ -422,6 +426,28 @@ const ProyectosProvider = ({ children }) => {
      }
     
   }
+
+  const completarTarea = async id =>{
+    try {
+      const token = localStorage.getItem('token')
+      if (!token) return
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+           Authorization: `Bearer ${token}`
+        }
+      }
+      const {data} = await clienteAxios.post(`/tareas/estado/${id}`,{},config)
+      const proyectoActualizado= {...proyecto}
+      proyectoActualizado.tareas = proyectoActualizado.tareas.map(tareaState => tareaState._id === data._id ? data : tareaState )
+      setProyecto(proyectoActualizado)
+      setTarea({});
+      setAlerta({});
+      
+    } catch (error) {
+      console.log(error.response)
+    }
+  }
   return (
     <ProyectosContext.Provider
       value={{
@@ -449,7 +475,9 @@ const ProyectosProvider = ({ children }) => {
         agregarColaborador,
         modalEliminarColaborador,
         handleModalEliminarColaborador,
-        eliminarColaborador
+        eliminarColaborador,
+        completarTarea
+       
         
       }}
     >{children}
