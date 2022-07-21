@@ -16,7 +16,8 @@ let socket;
 
 
 const Proyecto = () => {
-    const { obtenerProyecto, proyecto, cargando, handleModalTarea, alerta, SubmitTareasProyecto } = useProyectos()
+    const { obtenerProyecto, proyecto, cargando, handleModalTarea, alerta, 
+            SubmitTareasProyecto,eliminarTareaProyecto, actualizarTareaProyecto,cambiarEstadoTarea} = useProyectos()
     const params = useParams()
     
     const admin = useAdmin()
@@ -38,7 +39,28 @@ const Proyecto = () => {
                 SubmitTareasProyecto(tareaNueva)
 
             }
-        })
+        });
+        socket.on('tarea eliminada', tareaEliminada =>{
+            
+            if (tareaEliminada.proyecto === proyecto._id){
+                eliminarTareaProyecto(tareaEliminada)
+
+            }
+        });
+        socket.on('tarea actualizada', tareaActualizada =>{
+            
+            if (tareaActualizada.proyecto._id === proyecto._id){
+                actualizarTareaProyecto(tareaActualizada)
+
+            }
+        });
+        socket.on('nuevo estado', nuevoEstadoTarea =>{
+            
+            if (nuevoEstadoTarea.proyecto._id === proyecto._id){
+                cambiarEstadoTarea(nuevoEstadoTarea)
+
+            }
+        });
     })
     const { nombre } = proyecto
     
@@ -48,9 +70,11 @@ const Proyecto = () => {
             <>
                 {cargando ? <Spinner /> :
                     <>
-
+                          
                         <div className='flex justify-between '>
+                        
                             <h1 className='font-black text-4xl'>{nombre}</h1>
+                            
                             {admin && <div className='flex items-center gap-2 text-gray-400 hover:text-black'>
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
@@ -72,7 +96,7 @@ const Proyecto = () => {
                             </svg>
                             Nueva Tarea
                         </button>}
-                    
+                        {alerta?.msg && <Alerta alerta={alerta} />} 
                         <p className='font-bold text-xl mt-10 text-gray-800'>Tareas del Proyecto: {proyecto.tareas?.length}</p>
                         <div className='bg-white shadow mt-10 rounded-lg  overflow-y-scroll scrollbar-thumb-transparent scrollbar-thin
                                         hover:scrollbar-thumb-sky-700 scrollbar-thumb-rounded-full h-96 transition-colors'>

@@ -1,15 +1,17 @@
 import { Link, useNavigate } from "react-router-dom"
+import useAuth from "../hooks/useAuth"
 import useProyectos from "../hooks/useProyectos"
 import Busqueda from "./Busqueda"
 
 
 const Header = () => {
     const navigate = useNavigate()
-    const {handleBuscador} = useProyectos()
-    
+    const {handleBuscador,cerrarSesionProyectos} = useProyectos()
+    const {cerrarSesionAuth}=useAuth()
     const logOut = ()=>{
-        localStorage.clear()
-        
+        localStorage.removeItem('token')
+        cerrarSesionProyectos()
+        cerrarSesionAuth
         navigate('/')
     }
     return (
