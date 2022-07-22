@@ -27,6 +27,9 @@ const Login = () => {
         msg: 'Todos los campos son obligatorios',
         error: true
       })
+      setTimeout(() => {
+        setAlerta({})
+      }, 1500);
       return
     }
     try {
