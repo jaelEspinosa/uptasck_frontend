@@ -33,6 +33,9 @@ const ModalFormularioTarea = () => {
 
     const handleSubmit= async e =>{
         e.preventDefault();
+        
+        //vlaidar formulario
+        
         if([prioridad, descripcion, nombre, fechaEntrega].includes('')){
             setAlerta({
                 msg:'Todos los campos son Obligatorios',
@@ -43,6 +46,31 @@ const ModalFormularioTarea = () => {
             }, 2000);
             return       
         }
+       // validar la fecha
+
+        const fecha = new Date()
+        const today = {
+          year: fecha.getFullYear(),
+          month: fecha.getMonth() + 1,
+          day: fecha.getDate(),
+    
+        }
+        
+        if (Number(today.day) > Number(fechaEntrega.split('-')[2]) &&
+          Number(today.month) >= Number(fechaEntrega.split('-')[1]) &&
+          Number(today.year) >= Number(fechaEntrega.split('-')[0])) {
+    
+          setAlerta({
+            msg: 'Fecha no válida',
+            error: true
+          })
+          setTimeout(() => {
+            setAlerta({})
+          }, 2000);
+    
+    
+          return
+        }  
       await submitTarea({id, nombre, descripcion, prioridad, fechaEntrega, proyecto:params.id })
 
       // resetamos formulario del modal

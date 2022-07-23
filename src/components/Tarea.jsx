@@ -33,9 +33,9 @@ const Tarea = ({ tarea }) => {
               
               <button
               onClick={()=> completarTarea(_id)}
-              className={`${estado ? 'bg-sky-600 hover:bg-sky-700': 'bg-gray-600 hover:bg-gray-700'} px-4 py-3
+              className={`${estado ? 'bg-gray-300 hover:bg-gray-400': 'bg-gray-600 hover:bg-gray-700'} px-4 py-3
                                      text-white uppercase font-bold text-sm rounded-lg`}
-              >{estado ? 'Completa': 'incompleta'}</button> 
+              >{estado ? 'finalizada': 'Pendiente'}</button> 
              
               
              {admin && <button
