@@ -9,6 +9,7 @@ const NuevoPassword = () => {
   const [tokenOk, setTokenOk]=useState(false)
   const params = useParams()
   const navigate = useNavigate()
+  const regexp = /^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/
   useEffect(() => {
     const comprobarToken = async () => {
       
@@ -40,7 +41,13 @@ const NuevoPassword = () => {
       })
       return
     }
-
+    if(!regexp.test(password)){
+      setAlerta({
+       msg: 'Contraseña no válida.\nDebe contener al menos,\n8/16 caracteres,un número, una mayúscula y una minúscula',
+       error:true
+      })
+      return 
+    }
     try {
       const url = `/usuarios/olvide-password/${params.token}`
       const {data} = await clienteAxios.post(url, {password})

@@ -15,6 +15,9 @@ const Registrar = () => {
   const [alerta, setAlerta]= useState({})
   const navigate = useNavigate()
   const handleSubmit = async e=>{
+  const regexp = /^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/
+   
+
     e.preventDefault()
     if([nombre, email, password, repetirPassword].includes('')){
       setAlerta({
@@ -37,6 +40,15 @@ const Registrar = () => {
       })
       return
      }
+     
+     if(!regexp.test(password)){
+      setAlerta({
+       msg: 'Contraseña no válida.\nDebe contener al menos,\n8/16 caracteres,un número, una mayúscula y una minúscula',
+       error:true
+      })
+      return 
+    } 
+
      setAlerta({})
 
      // crear el usuario en la api
@@ -74,12 +86,12 @@ const Registrar = () => {
     <>
     <h1 className="text-sky-600 font-black text-5xl capitalize px-5">Crea tu Cuenta y Administra tus {' '}
         <span className="text-slate-700 text-4xl md:text-5xl">proyectos</span></h1>
-   {alerta.msg && <Alerta alerta={alerta}/>}
+  
  <form 
        className="my-10 bg-white rounded-lg shadow p-10"
        onSubmit={handleSubmit}
        >
-       
+    {alerta.msg && <Alerta alerta={alerta}/>}    
   <div className="my-5" >
     <label 
         className="uppercase text-gray-600 block text-xl font-bold"
@@ -116,6 +128,7 @@ const Registrar = () => {
     <input 
       id="password"
       type="password"
+      
       placeholder = "password"
       className="w-full mt-3 p-3 border rounded-xl bg-gray-50 focus:border-sky-700 focus:outline-none"
       value={password}
