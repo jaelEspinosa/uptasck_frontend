@@ -23,7 +23,7 @@ const ProyectosProvider = ({ children }) => {
   const [modalEliminarColaborador, setModalEliminarColaborador] = useState(false)
   const [buscador, setbuscador] = useState(false)
   const [tarea, setTarea] = useState({})
-
+  const [listaUsuarios, setListaUsuarios]=useState([])
   useEffect(() => {
     const obtenerProyectos = async () => {
       setCargando(true)
@@ -494,7 +494,14 @@ const ProyectosProvider = ({ children }) => {
     setColaborador({})
 
   }
-
+  const obtenerUsuarios = async ()=>{
+    try {
+      const {data} = await clienteAxios('usuarios/listausuarios')
+      setListaUsuarios(data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
   return (
     <ProyectosContext.Provider
       value={{
@@ -530,7 +537,9 @@ const ProyectosProvider = ({ children }) => {
         eliminarTareaProyecto,
         actualizarTareaProyecto,
         cambiarEstadoTarea,
-        cerrarSesionProyectos
+        cerrarSesionProyectos,
+        obtenerUsuarios,
+        listaUsuarios
       }}
     >{children}
     </ProyectosContext.Provider>

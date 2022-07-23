@@ -5,26 +5,16 @@ import Alerta from "./Alerta"
 
 const FormularioColaborador = () => {
     const [email, setEmail] = useState('')
-    const {alerta, setAlerta, submitColaborador}=useProyectos()
+    const { alerta, listaUsuarios, agregarColaborador } = useProyectos()
 
-    const handleSubmit = e =>{
-        e.preventDefault()
-        if (!email){
-          setAlerta({
-            msg:'El Campo Email es Obligatorio',
-            error:true
-          })
-          setTimeout(() => {
-            setAlerta({})
-          }, 2000);
-            return
-        }
-        submitColaborador(email)   
-    }
+   
+
+    const usuariosFiltrados = listaUsuarios.filter(usuario => usuario.email.includes(email))
+    console.log(usuariosFiltrados)
     return (
-        <form 
-         
-            onSubmit={handleSubmit}
+        <form
+
+            
             className="bg-white py-10 px-5 md:w-1/2 rounded-lg shadow">
             <div className='mb-5'>
                 <label
@@ -40,16 +30,32 @@ const FormularioColaborador = () => {
                     onChange={e => setEmail(e.target.value)}
                 />
             </div>
-            { !alerta.msg && <input
-                type='submit'
-                value='Buscar Colaborador'
-                className='text-sm px-5 py-3 w-full mt-10 
-                  rounded-lg uppercase font-bold bg-sky-500 hover:bg-sky-700 transition-colors
-                text-white text-center'
-            />}
+
+
+            {email.length > 0 && <div className="border-2 px-5 py-2 rounded-md">
+                
+                {usuariosFiltrados.map(usuario => (
+                    <div 
+                        className="flex gap-2 my-2 items-center justify-between text-xs"
+                        key={usuario._id}>
+                        <p>{usuario.email}</p>
+                        <button
+                            onClick={() => agregarColaborador({
+                                email: usuario.email
+                            })}
+                            type='button'
+                            className="bg-slate-500 hover:bg-slate-600 
+                             transition-colors py-1 px-2 rounded-md text-white"
+                        >Agregar</button>
+                    </div>
+                ))}
+
+                {!usuariosFiltrados.length && <p>No hay resultados</p>}
+            </div>}
+            
             <div className="w-full">
-           
-            {alerta.msg && <Alerta alerta={alerta} />} 
+
+                {alerta.msg && <Alerta alerta={alerta} />}
 
             </div>
         </form>
