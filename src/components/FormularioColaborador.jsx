@@ -10,7 +10,7 @@ const FormularioColaborador = () => {
    
 
     const usuariosFiltrados = listaUsuarios.filter(usuario => usuario.email.includes(email))
-    console.log(usuariosFiltrados)
+    
     return (
         <form
 
