@@ -19,9 +19,12 @@ const Tarea = ({ tarea }) => {
                </div>
                <p className="mb-2 text-sm font-bold">Fecha: {formatearFecha(fechaEntrega)}</p>
                <p className="mb-2 text-sm">Prioridad: {prioridad}</p>
-              {estado && <p className="text-xs bg-green-600 rounded-lg p-1 font-bold uppercase
+              {estado ? <p className="text-xs bg-green-600 rounded-lg p-1 font-bold uppercase
                                        text-white ">
-                    Completada por :{tarea.completado?.nombre}</p>}
+                    Completada por :{tarea.completado?.nombre}</p> : 
+                    <p className="text-xs bg-red-600 rounded-lg p-1 font-bold uppercase
+                                       text-white ">
+                    Pendiente </p>}
               
             </div>
           
@@ -34,8 +37,8 @@ const Tarea = ({ tarea }) => {
               <button
               onClick={()=> completarTarea(_id)}
               className={`${estado ? 'bg-gray-300 hover:bg-gray-400': 'bg-gray-600 hover:bg-gray-700'} px-4 py-3
-                                     text-white uppercase font-bold text-sm rounded-lg`}
-              >{estado ? 'finalizada': 'Pendiente'}</button> 
+                                     text-white uppercase font-bold text-xs rounded-lg`}
+              >{estado ? 'establecer como pendiente': 'establecer como completada'}</button> 
              
               
              {admin && <button

@@ -9,7 +9,7 @@ const Colaborador = ({colaborador}) => {
 
     <div>
       <p>{nombre}</p>
-      <p className='text-sm text-gray-700'>{email}</p>
+      <p className='text-xs md:text-sm text-gray-700'>{email}</p>
     </div>
     
 
@@ -17,7 +17,7 @@ const Colaborador = ({colaborador}) => {
     <button
          onClick={() => handleModalEliminarColaborador(colaborador)}
          type='button'
-         className='bg-red-600 px-4 py-3 text-white uppercase font-black text-sm rounded-lg'   
+         className='bg-red-600 px-4 py-3 text-white uppercase font-black text-xs md:text-sm rounded-lg'   
     >Eliminar</button>
 
     </div>
