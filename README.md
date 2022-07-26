@@ -7,26 +7,26 @@
 
 
 
-## Try it yourself! :computer: 📱
+## pruébala tu mismo :computer: 📱
 Netlify URL :  https://uptask-mern.netlify.app/
 
 ![App_Preview](https://github.com/jaelEspinosa/uptasck_frontend/blob/master/public/images/proyectos.png)
 
 
-## Tools used 🛠️
+## herramientas usadas 🛠️
 * [headlessui](https://headlessui.com//) - Para crear los modales
 *  nodemailer - Para el envio del correo de verificación de usuario.
 *  Socket_io - Para actualizar el state en tiempo real, en todos los clientes conectados en el mismo proyecto.
 
 
 
-## Technologies ⌨️
+## Tecnologías ⌨️
 * HTML5
 * CCS3
 * TAILWIND
 * REACT
 
 
-## Author✒️
+## Autor✒️
 * **Jose Antonio Espinosa** - [jaelEspinosa ](https://github.com/jaelEspinosa)
 
