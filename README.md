@@ -1,6 +1,6 @@
 # UpTask Mern
 
-![SyringeIMG](images/login.png)
+![SyringeIMG](https://github.com/jaelEspinosa/uptasck_frontend/blob/master/public/images/login.png)
 
  UpTask es una app en la que puedes administrar tus proyectos. Puedes añadir colaboradores a tus proyectos y asignar tareas. Puedes agregar colaboradores a tu proyecto siempre que estén registrados en la app
 
