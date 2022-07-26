@@ -7,7 +7,7 @@
 
 
 
-## Try it yourself! :computer:
+## Try it yourself! :computer: 📱
 Netlify URL :  https://uptask-mern.netlify.app/
 
 ![App_Preview](https://github.com/jaelEspinosa/uptasck_frontend/blob/master/public/images/proyectos.png)
