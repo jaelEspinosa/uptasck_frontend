@@ -10,7 +10,7 @@
 ## Try it yourself! :computer:
 Netlify URL :  https://uptask-mern.netlify.app/
 
-![App_Preview](images/tareas.png)
+<img  style = "width: 250px;" src= 'https://github.com/jaelEspinosa/uptasck_frontend/blob/master/public/images/proyectos.png />
 
 
 ## Tools used 🛠️
