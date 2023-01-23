@@ -28,7 +28,8 @@ const AuthProvider = ({children}) =>{
                                         // este codigo lo he movido a login para que compruebe si hay token
                                         // y entonces si que lo redirecciono a proyectos
         } catch (error) {
-          setAuth({})
+          setAuth({});
+          localStorage.removeItem('token')
         }finally{
             setCargando(false)
 
